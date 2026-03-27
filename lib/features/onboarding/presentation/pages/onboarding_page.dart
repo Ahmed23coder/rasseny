@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_strings.dart';
 import '../../../../core/di/service_locator.dart';
+import '../../../auth/presentation/pages/auth_page.dart';
 import '../../logic/onboarding_cubit.dart';
 import '../../logic/onboarding_state.dart';
 import '../widgets/onboarding_button.dart';
@@ -47,9 +48,8 @@ class _OnboardingViewState extends State<_OnboardingView> {
   }
 
   void _navigateToSignIn() {
-    // TODO: Replace with actual SignIn route.
     Navigator.of(context).pushReplacement(
-      MaterialPageRoute(builder: (_) => const _SignInPlaceholder()),
+      MaterialPageRoute(builder: (_) => const AuthPage()),
     );
   }
 
@@ -164,27 +164,6 @@ class _OnboardingViewState extends State<_OnboardingView> {
               ),
             ),
           ],
-        ),
-      ),
-    );
-  }
-}
-
-// ─────────────────────────────────────────────────────────
-// Temporary placeholder for sign-in – replace later
-// ─────────────────────────────────────────────────────────
-
-class _SignInPlaceholder extends StatelessWidget {
-  const _SignInPlaceholder();
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColors.midnightNavy,
-      body: const Center(
-        child: Text(
-          'Sign In Screen',
-          style: TextStyle(color: Colors.white, fontSize: 24),
         ),
       ),
     );

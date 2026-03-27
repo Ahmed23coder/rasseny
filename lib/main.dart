@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'core/di/service_locator.dart';
 import 'core/theme/app_theme.dart';
-import 'features/splash/presentation/splash_page.dart';
+import 'features/onboarding/presentation/pages/splash_page.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();

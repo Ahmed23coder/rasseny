@@ -25,7 +25,7 @@ class OnboardingSlide extends StatelessWidget {
                 alignment: Alignment.topCenter,
                 opacity: 0.25,
                 colorFilter: const ColorFilter.mode(
-                  Color(0xFF0A2540), // deep navy tint
+                  AppColors.midnightNavy, // deep navy tint
                   BlendMode.color,
                 ),
               ),

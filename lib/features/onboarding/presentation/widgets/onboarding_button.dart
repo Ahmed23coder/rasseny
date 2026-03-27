@@ -32,7 +32,7 @@ class OnboardingButton extends StatelessWidget {
               gradient: const LinearGradient(
                 begin: Alignment.bottomLeft,
                 end: Alignment.topRight,
-                colors: [AppColors.silver, Color(0xFF272929)],
+                colors: [AppColors.silver, AppColors.buttonDark],
               ),
             ),
             child: Padding(

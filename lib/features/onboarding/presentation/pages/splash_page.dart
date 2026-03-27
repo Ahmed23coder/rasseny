@@ -3,12 +3,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../../../core/constants/app_colors.dart';
-import '../../../core/constants/app_strings.dart';
-import '../../../core/di/service_locator.dart';
-import '../../onboarding/presentation/pages/onboarding_page.dart';
-import '../logic/cubit/splash_cubit.dart';
-import '../logic/cubit/splash_state.dart';
+import '../../../../core/constants/app_colors.dart';
+import '../../../../core/constants/app_strings.dart';
+import '../../../../core/di/service_locator.dart';
+import 'onboarding_page.dart';
+import '../../logic/splash_cubit.dart';
+import '../../logic/splash_state.dart';
 
 /// Rasseny splash screen – Midnight Navy gradient, anchor logo, brand text.
 class SplashPage extends StatelessWidget {
