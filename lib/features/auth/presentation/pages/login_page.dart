@@ -7,11 +7,13 @@ import 'package:animate_do/animate_do.dart';
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_strings.dart';
 import '../../../../core/utils/size_config.dart';
-import '../../logic/auth_cubit.dart';
+import '../../logic/auth_bloc.dart';
+import '../../logic/auth_event.dart';
 import '../../logic/auth_state.dart';
 import '../widgets/auth_button.dart';
 import '../widgets/auth_text_field.dart';
 import '../widgets/social_auth_row.dart';
+import 'package:supabase_flutter/supabase_flutter.dart' show OAuthProvider;
 
 /// Login screen (Figma Node 17-22).
 class LoginPage extends StatefulWidget {
@@ -36,17 +38,40 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<AuthCubit, AuthState>(
+    return BlocConsumer<AuthBloc, AuthState>(
       listener: (context, state) {
-        if (state is AuthError && state.previousState is Unauthenticated) {
+        if (state is AuthFailure && state.previousState is Unauthenticated) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(state.message),
+              backgroundColor: AppColors.error,
+              behavior: SnackBarBehavior.floating,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
+            ),
+          );
           setState(() => _errorMessage = state.message);
+        } else if (state is AuthLoading) {
+          // Handled by builder
         } else {
           setState(() => _errorMessage = null);
         }
       },
-      child: Scaffold(
-        backgroundColor: AppColors.scaffoldDark,
-        body: Stack(
+      builder: (context, state) {
+        final isLoading = state is AuthLoading && state.previousState is Unauthenticated;
+        return Scaffold(
+          backgroundColor: AppColors.scaffoldDark,
+          extendBodyBehindAppBar: true,
+          appBar: AppBar(
+            backgroundColor: Colors.transparent,
+            elevation: 0,
+            leading: IconButton(
+              icon: const Icon(Icons.arrow_back, color: AppColors.textPrimary),
+              onPressed: () => context.read<AuthBloc>().add(const AuthGoBack()),
+            ),
+          ),
+          body: Stack(
           children: [
             // ── Background blurs ──
             Positioned(
@@ -219,8 +244,8 @@ class _LoginPageState extends State<LoginPage> {
                               ),
                               GestureDetector(
                                 onTap: () => context
-                                    .read<AuthCubit>()
-                                    .showForgotPassword(),
+                                    .read<AuthBloc>()
+                                    .add(const ShowForgotPasswordEvent()),
                                 child: Text(
                                   AppStrings.forgotPassword,
                                   style: GoogleFonts.inter(
@@ -286,11 +311,15 @@ class _LoginPageState extends State<LoginPage> {
                           // Login button
                           AuthButton(
                             label: AppStrings.loginButton,
-                            onPressed: () =>
-                                context.read<AuthCubit>().submitLogin(
-                                  email: _emailController.text,
-                                  password: _passwordController.text,
-                                ),
+                            isLoading: isLoading,
+                            onPressed: isLoading
+                                ? null
+                                : () => context.read<AuthBloc>().add(
+                                      LoginSubmitted(
+                                        _emailController.text,
+                                        _passwordController.text,
+                                      ),
+                                    ),
                           ),
                           SizedBox(height: SizeConfig.screenHeight * 0.05), // 40
 
@@ -337,11 +366,11 @@ class _LoginPageState extends State<LoginPage> {
                           // Social Auth Row
                           SocialAuthRow(
                             onApplePressed: () =>
-                                context.read<AuthCubit>().signInWithApple(),
+                                context.read<AuthBloc>().add(const SocialSignInPressed(OAuthProvider.apple)),
                             onGooglePressed: () =>
-                                context.read<AuthCubit>().signInWithGoogle(),
+                                context.read<AuthBloc>().add(const SocialSignInPressed(OAuthProvider.google)),
                             onFacebookPressed: () =>
-                                context.read<AuthCubit>().signInWithFacebook(),
+                                context.read<AuthBloc>().add(const SocialSignInPressed(OAuthProvider.facebook)),
                           ),
                         ],
                       ),
@@ -364,7 +393,9 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                         ),
                         GestureDetector(
-                          onTap: () => context.read<AuthCubit>().showSignUp(),
+                          onTap: () => context
+                              .read<AuthBloc>()
+                              .add(const ShowSignUpEvent()),
                           child: Text(
                             AppStrings.createAccount,
                             style: GoogleFonts.inter(
@@ -384,9 +415,10 @@ class _LoginPageState extends State<LoginPage> {
             ),
           ],
         ),
-      ),
-    );
-  }
+      );
+    },
+  );
+}
 
   Widget _blur({
     required double width,

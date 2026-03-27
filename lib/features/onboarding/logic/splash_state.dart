@@ -13,3 +13,11 @@ class SplashLoading extends SplashState {
 class NavigateToOnboarding extends SplashState {
   const NavigateToOnboarding();
 }
+
+class NavigateToAuth extends SplashState {
+  const NavigateToAuth();
+}
+
+class NavigateToHome extends SplashState {
+  const NavigateToHome();
+}

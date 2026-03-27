@@ -48,9 +48,10 @@ abstract final class AppStrings {
   static const String secureYourAnchor = 'Secure your\nAnchor';
   static const String otpSubtitle =
       'We sent a code to your email. Please\n'
-      'enter the four-digit verification pin to\nproceed.';
+      'enter the six-digit verification pin to\nproceed.';
   static const String verifyIdentity = 'VERIFY IDENTITY';
   static const String resendCodeIn = 'Resend Code in ';
+  static const String resendCode = 'Resend Code';
   static const String didntReceive = "Didn't receive the email?";
   static const String tryAnotherWay = 'Try another way';
 

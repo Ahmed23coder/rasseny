@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_strings.dart';
+import '../../../../core/utils/size_config.dart';
+import '../../logic/auth_bloc.dart';
+import '../../logic/auth_event.dart';
 
 /// Authentication success screen (Figma Node 17-175).
 class AuthSuccessPage extends StatelessWidget {
@@ -18,13 +22,14 @@ class AuthSuccessPage extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 24),
           child: Column(
             children: [
-              const SizedBox(height: 32),
+              SizedBox(height: SizeConfig.screenHeight * 0.04), // ~32
 
               // ── Illustration container ──
               Container(
                 width: double.infinity,
                 height: 280,
                 decoration: BoxDecoration(
+                  color: AppColors.inputFillDark.withValues(alpha: 0.5),
                   borderRadius: BorderRadius.circular(48),
                   gradient: LinearGradient(
                     begin: Alignment.topCenter,
@@ -148,7 +153,7 @@ class AuthSuccessPage extends StatelessWidget {
                 textAlign: TextAlign.center,
                 style: GoogleFonts.newsreader(
                   color: AppColors.textPrimary,
-                  fontSize: 56,
+                  fontSize: 56 * SizeConfig.textMultiplier,
                   fontStyle: FontStyle.italic,
                   letterSpacing: -2.8,
                   height: 1.07,
@@ -162,7 +167,7 @@ class AuthSuccessPage extends StatelessWidget {
                 textAlign: TextAlign.center,
                 style: GoogleFonts.inter(
                   color: AppColors.silver.withValues(alpha: 0.6),
-                  fontSize: 16,
+                  fontSize: 16 * SizeConfig.textMultiplier,
                   height: 1.625,
                 ),
               ),
@@ -212,7 +217,7 @@ class AuthSuccessPage extends StatelessWidget {
                   color: AppColors.navyButton,
                   child: InkWell(
                     onTap: () {
-                      // TODO: Navigate to Home
+                      context.read<AuthBloc>().add(const SuccessGetStartedPressed());
                     },
                     borderRadius: BorderRadius.circular(9999),
                     child: Padding(
@@ -250,7 +255,7 @@ class AuthSuccessPage extends StatelessWidget {
                 'THE OBSIDIAN CURATOR — EDITION 2024',
                 style: GoogleFonts.inter(
                   color: AppColors.silver.withValues(alpha: 0.25),
-                  fontSize: 10,
+                  fontSize: 10 * SizeConfig.textMultiplier,
                   letterSpacing: 2.5,
                 ),
               ),

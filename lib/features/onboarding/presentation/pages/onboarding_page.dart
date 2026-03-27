@@ -11,6 +11,7 @@ import '../../logic/onboarding_state.dart';
 import '../widgets/onboarding_button.dart';
 import '../widgets/onboarding_slide.dart';
 import '../widgets/page_indicator.dart';
+import '../../logic/splash_cubit.dart';
 
 /// 3-screen onboarding flow with PageView, Cubit, and swipe support.
 class OnboardingPage extends StatelessWidget {
@@ -48,6 +49,12 @@ class _OnboardingViewState extends State<_OnboardingView> {
   }
 
   void _navigateToSignIn() {
+    try {
+      sl<SplashCubit>().markOnboardingFinished();
+    } catch (e) {
+      debugPrint('[OnboardingPage] markOnboardingFinished error: $e');
+    }
+    if (!mounted) return;
     Navigator.of(context).pushReplacement(
       MaterialPageRoute(builder: (_) => const AuthPage()),
     );
