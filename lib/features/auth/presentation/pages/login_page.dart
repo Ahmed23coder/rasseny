@@ -2,14 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:animate_do/animate_do.dart';
 
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_strings.dart';
+import '../../../../core/utils/size_config.dart';
 import '../../logic/auth_cubit.dart';
 import '../../logic/auth_state.dart';
 import '../widgets/auth_button.dart';
 import '../widgets/auth_text_field.dart';
-import '../widgets/social_auth_button.dart';
+import '../widgets/social_auth_row.dart';
 
 /// Login screen (Figma Node 17-22).
 class LoginPage extends StatefulWidget {
@@ -72,66 +74,84 @@ class _LoginPageState extends State<LoginPage> {
                 padding: const EdgeInsets.symmetric(horizontal: 24),
                 child: Column(
                   children: [
-                    const SizedBox(height: 32),
+                    SizedBox(height: SizeConfig.screenHeight * 0.04), // 32
 
                     // Logo anchor
-                    Container(
-                      width: 64,
-                      height: 64,
-                      decoration: BoxDecoration(
-                        color: AppColors.inputFillDark,
-                        shape: BoxShape.circle,
-                        border: Border.all(
-                          color: AppColors.ghostBorder.withValues(alpha: 0.15),
-                        ),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withValues(alpha: 0.4),
-                            blurRadius: 80,
-                            offset: const Offset(0, 20),
+                    FadeInUp(
+                      duration: const Duration(milliseconds: 600),
+                      child: Hero(
+                        tag: 'logo_anchor',
+                        child: Container(
+                          width: 64,
+                          height: 64,
+                          decoration: BoxDecoration(
+                            color: AppColors.inputFillDark,
+                            shape: BoxShape.circle,
+                            border: Border.all(
+                              color: AppColors.ghostBorder.withValues(alpha: 0.15),
+                            ),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black.withValues(alpha: 0.4),
+                                blurRadius: 80,
+                                offset: const Offset(0, 20),
+                              ),
+                            ],
                           ),
-                        ],
-                      ),
-                      child: Center(
-                        child: SvgPicture.asset(
-                          AppStrings.logoPath,
-                          width: 26,
-                          height: 29,
-                          colorFilter: const ColorFilter.mode(
-                            AppColors.silver,
-                            BlendMode.srcIn,
+                          child: Center(
+                            child: SvgPicture.asset(
+                              AppStrings.logoPath,
+                              width: 26,
+                              height: 29,
+                              colorFilter: const ColorFilter.mode(
+                                AppColors.silver,
+                                BlendMode.srcIn,
+                              ),
+                            ),
                           ),
                         ),
                       ),
                     ),
-                    const SizedBox(height: 24),
+                    SizedBox(height: SizeConfig.screenHeight * 0.03), // 24
 
                     // Title
-                    Text(
-                      AppStrings.brandName,
-                      style: GoogleFonts.newsreader(
-                        color: AppColors.textPrimary,
-                        fontSize: 48,
-                        fontStyle: FontStyle.italic,
-                        letterSpacing: -2.4,
+                    FadeInUp(
+                      delay: const Duration(milliseconds: 100),
+                      duration: const Duration(milliseconds: 600),
+                      child: Text(
+                        AppStrings.brandName,
+                        style: GoogleFonts.newsreader(
+                          color: AppColors.textPrimary,
+                          fontSize: 48 * SizeConfig.textMultiplier,
+                          fontStyle: FontStyle.italic,
+                          letterSpacing: -2.4,
+                        ),
                       ),
                     ),
-                    const SizedBox(height: 12),
+                    SizedBox(height: SizeConfig.screenHeight * 0.015), // 12
 
                     // Subtitle
-                    Text(
-                      AppStrings.obsidianCurator.toUpperCase(),
-                      style: GoogleFonts.inter(
-                        color: AppColors.silver.withValues(alpha: 0.6),
-                        fontSize: 14,
-                        letterSpacing: 1.4,
+                    FadeInUp(
+                      delay: const Duration(milliseconds: 200),
+                      duration: const Duration(milliseconds: 600),
+                      child: Text(
+                        AppStrings.obsidianCurator.toUpperCase(),
+                        style: GoogleFonts.inter(
+                          color: AppColors.silver.withValues(alpha: 0.6),
+                          fontSize: 14 * SizeConfig.textMultiplier,
+                          letterSpacing: 1.4,
+                        ),
                       ),
                     ),
-                    const SizedBox(height: 48),
+                    SizedBox(height: SizeConfig.screenHeight * 0.06), // 48
 
                     // ── Login Card ──
-                    Container(
-                      width: double.infinity,
+                    FadeInUp(
+                      delay: const Duration(milliseconds: 300),
+                      duration: const Duration(milliseconds: 600),
+                      child: Container(
+                        constraints: const BoxConstraints(maxWidth: 600),
+                        width: double.infinity,
                       padding: const EdgeInsets.all(33),
                       decoration: BoxDecoration(
                         border: Border.all(
@@ -154,19 +174,19 @@ class _LoginPageState extends State<LoginPage> {
                             AppStrings.welcomeBack,
                             style: GoogleFonts.newsreader(
                               color: AppColors.textPrimary,
-                              fontSize: 30,
+                              fontSize: 30 * SizeConfig.textMultiplier,
                             ),
                           ),
-                          const SizedBox(height: 8),
+                          SizedBox(height: SizeConfig.screenHeight * 0.01), // 8
                           Text(
                             AppStrings.loginSubtitle,
                             style: GoogleFonts.inter(
                               color: AppColors.silver.withValues(alpha: 0.8),
-                              fontSize: 14,
+                              fontSize: 14 * SizeConfig.textMultiplier,
                               height: 1.43,
                             ),
                           ),
-                          const SizedBox(height: 40),
+                          SizedBox(height: SizeConfig.screenHeight * 0.05), // 40
 
                           // Email field
                           AuthTextField(
@@ -174,12 +194,15 @@ class _LoginPageState extends State<LoginPage> {
                             hint: AppStrings.emailHint,
                             controller: _emailController,
                             keyboardType: TextInputType.emailAddress,
-                            errorText: _errorMessage != null &&
-                                    _errorMessage!.toLowerCase().contains('email')
+                            errorText:
+                                _errorMessage != null &&
+                                    _errorMessage!.toLowerCase().contains(
+                                      'email',
+                                    )
                                 ? _errorMessage
                                 : null,
                           ),
-                          const SizedBox(height: 24),
+                          SizedBox(height: SizeConfig.screenHeight * 0.03), // 24
 
                           // Password label + Forgot
                           Row(
@@ -195,8 +218,9 @@ class _LoginPageState extends State<LoginPage> {
                                 ),
                               ),
                               GestureDetector(
-                                onTap: () =>
-                                    context.read<AuthCubit>().showForgotPassword(),
+                                onTap: () => context
+                                    .read<AuthCubit>()
+                                    .showForgotPassword(),
                                 child: Text(
                                   AppStrings.forgotPassword,
                                   style: GoogleFonts.inter(
@@ -207,7 +231,7 @@ class _LoginPageState extends State<LoginPage> {
                               ),
                             ],
                           ),
-                          const SizedBox(height: 8),
+                          SizedBox(height: SizeConfig.screenHeight * 0.01), // 8
 
                           // Password input (custom inline – skip label)
                           Container(
@@ -215,7 +239,9 @@ class _LoginPageState extends State<LoginPage> {
                               color: AppColors.inputFill,
                               borderRadius: BorderRadius.circular(9999),
                               border: Border.all(
-                                color: AppColors.inputBorderBlue.withValues(alpha: 0.3),
+                                color: AppColors.inputBorderBlue.withValues(
+                                  alpha: 0.3,
+                                ),
                               ),
                             ),
                             child: TextField(
@@ -228,7 +254,9 @@ class _LoginPageState extends State<LoginPage> {
                               decoration: InputDecoration(
                                 hintText: AppStrings.passwordHint,
                                 hintStyle: GoogleFonts.inter(
-                                  color: AppColors.hintText.withValues(alpha: 0.4),
+                                  color: AppColors.hintText.withValues(
+                                    alpha: 0.4,
+                                  ),
                                   fontSize: 16,
                                 ),
                                 contentPadding: const EdgeInsets.symmetric(
@@ -241,7 +269,9 @@ class _LoginPageState extends State<LoginPage> {
                                     _obscurePassword
                                         ? Icons.visibility_off_outlined
                                         : Icons.visibility_outlined,
-                                    color: AppColors.hintText.withValues(alpha: 0.6),
+                                    color: AppColors.hintText.withValues(
+                                      alpha: 0.6,
+                                    ),
                                     size: 18,
                                   ),
                                   onPressed: () => setState(
@@ -251,34 +281,42 @@ class _LoginPageState extends State<LoginPage> {
                               ),
                             ),
                           ),
-                          const SizedBox(height: 24),
+                          SizedBox(height: SizeConfig.screenHeight * 0.03), // 24
 
                           // Login button
                           AuthButton(
                             label: AppStrings.loginButton,
-                            onPressed: () => context.read<AuthCubit>().submitLogin(
+                            onPressed: () =>
+                                context.read<AuthCubit>().submitLogin(
                                   email: _emailController.text,
                                   password: _passwordController.text,
                                 ),
                           ),
-                          const SizedBox(height: 40),
+                          SizedBox(height: SizeConfig.screenHeight * 0.05), // 40
 
                           // Divider
                           Row(
                             children: [
                               Expanded(
                                 child: Divider(
-                                  color: AppColors.ghostBorder.withValues(alpha: 0.1),
+                                  color: AppColors.ghostBorder.withValues(
+                                    alpha: 0.1,
+                                  ),
                                 ),
                               ),
                               Container(
-                                margin: const EdgeInsets.symmetric(horizontal: 16),
-                                padding: const EdgeInsets.symmetric(horizontal: 8),
-                                color: AppColors.cardDark,
+                                margin: const EdgeInsets.symmetric(
+                                  horizontal: 16,
+                                ),
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 8,
+                                ),
                                 child: Text(
                                   AppStrings.orContinueWith.toUpperCase(),
                                   style: GoogleFonts.inter(
-                                    color: AppColors.hintText.withValues(alpha: 0.4),
+                                    color: AppColors.hintText.withValues(
+                                      alpha: 0.4,
+                                    ),
                                     fontSize: 12,
                                     fontWeight: FontWeight.w500,
                                     letterSpacing: 1.2,
@@ -287,28 +325,35 @@ class _LoginPageState extends State<LoginPage> {
                               ),
                               Expanded(
                                 child: Divider(
-                                  color: AppColors.ghostBorder.withValues(alpha: 0.1),
+                                  color: AppColors.ghostBorder.withValues(
+                                    alpha: 0.1,
+                                  ),
                                 ),
                               ),
                             ],
                           ),
-                          const SizedBox(height: 24),
+                          SizedBox(height: SizeConfig.screenHeight * 0.03), // 24
 
-                          // Social button
-                          Center(
-                            child: SocialAuthButton(
-                              label: AppStrings.github,
-                              icon: Icons.code,
-                              onPressed: () {},
-                            ),
+                          // Social Auth Row
+                          SocialAuthRow(
+                            onApplePressed: () =>
+                                context.read<AuthCubit>().signInWithApple(),
+                            onGooglePressed: () =>
+                                context.read<AuthCubit>().signInWithGoogle(),
+                            onFacebookPressed: () =>
+                                context.read<AuthCubit>().signInWithFacebook(),
                           ),
                         ],
                       ),
                     ),
-                    const SizedBox(height: 32),
+                    ),
+                    SizedBox(height: SizeConfig.screenHeight * 0.04), // 32
 
                     // Footer
-                    Row(
+                    FadeInUp(
+                      delay: const Duration(milliseconds: 400),
+                      duration: const Duration(milliseconds: 600),
+                      child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
@@ -331,7 +376,8 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                       ],
                     ),
-                    const SizedBox(height: 48),
+                    ),
+                    SizedBox(height: SizeConfig.screenHeight * 0.06), // 48
                   ],
                 ),
               ),
@@ -350,10 +396,7 @@ class _LoginPageState extends State<LoginPage> {
     return Container(
       width: width,
       height: height,
-      decoration: BoxDecoration(
-        shape: BoxShape.circle,
-        color: color,
-      ),
+      decoration: BoxDecoration(shape: BoxShape.circle, color: color),
     );
   }
 }

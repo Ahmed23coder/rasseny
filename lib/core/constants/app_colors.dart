@@ -49,6 +49,9 @@ abstract final class AppColors {
   static const Color inputBorderBlue = Color(0xFF486581);
   static const Color subtleBorder = Color(0xFF6B7280);
 
+  // ── Auth – Shimmer ──
+  static const Color slateBlue = Color(0xFF718EAA);
+
   // ── Auth – Misc ──
   static const Color hintText = Color(0xFF8D9198);
 }

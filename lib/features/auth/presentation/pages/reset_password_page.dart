@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:animate_do/animate_do.dart';
 
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_strings.dart';
+import '../../../../core/utils/size_config.dart';
 import '../../logic/auth_cubit.dart';
 import '../../logic/auth_state.dart';
 import '../widgets/auth_button.dart';
@@ -47,32 +49,41 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
       child: Scaffold(
         backgroundColor: AppColors.scaffoldDark,
         body: SafeArea(
-          child: SingleChildScrollView(
-            padding: const EdgeInsets.symmetric(horizontal: 24),
-            child: Column(
-              children: [
-                const SizedBox(height: 48),
-
-                // Brand
-                Text(
-                  AppStrings.brandName,
-                  style: GoogleFonts.newsreader(
-                    color: AppColors.silver,
-                    fontSize: 56,
-                    fontStyle: FontStyle.italic,
-                    letterSpacing: -2.8,
-                  ),
-                ),
-                const SizedBox(height: 16),
-
-                // Subtitle with italic emphasis
-                RichText(
-                  textAlign: TextAlign.center,
-                  text: TextSpan(
-                    style: GoogleFonts.newsreader(
-                      color: AppColors.silver.withValues(alpha: 0.6),
-                      fontSize: 18,
+          child: Center(
+            child: ConstrainedBox(
+              constraints: const BoxConstraints(maxWidth: 600),
+              child: SingleChildScrollView(
+                padding: const EdgeInsets.symmetric(horizontal: 24),
+                child: Column(
+                  children: [
+                    SizedBox(height: SizeConfig.screenHeight * 0.06), // 48
+    
+                    // Brand
+                    FadeInUp(
+                      duration: const Duration(milliseconds: 600),
+                      child: Text(
+                        AppStrings.brandName,
+                        style: GoogleFonts.newsreader(
+                          color: AppColors.silver,
+                          fontSize: 56 * SizeConfig.textMultiplier,
+                          fontStyle: FontStyle.italic,
+                          letterSpacing: -2.8,
+                        ),
+                      ),
                     ),
+                    SizedBox(height: SizeConfig.screenHeight * 0.02), // 16
+    
+                    // Subtitle with italic emphasis
+                    FadeInUp(
+                      delay: const Duration(milliseconds: 100),
+                      duration: const Duration(milliseconds: 600),
+                      child: RichText(
+                        textAlign: TextAlign.center,
+                        text: TextSpan(
+                          style: GoogleFonts.newsreader(
+                            color: AppColors.silver.withValues(alpha: 0.6),
+                            fontSize: 18 * SizeConfig.textMultiplier,
+                          ),
                     children: [
                       const TextSpan(text: 'Secure your narrative. '),
                       TextSpan(
@@ -85,69 +96,77 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                     ],
                   ),
                 ),
-                const SizedBox(height: 24),
-
-                // ── Security Update badge ──
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 16,
-                      vertical: 6,
-                    ),
-                    decoration: BoxDecoration(
-                      color: AppColors.accentGold,
-                      borderRadius: BorderRadius.circular(9999),
-                    ),
-                    child: Text(
-                      AppStrings.securityUpdate,
-                      style: GoogleFonts.inter(
-                        color: AppColors.accentGoldDark,
-                        fontSize: 12,
-                        fontWeight: FontWeight.w700,
-                        letterSpacing: 0.6,
-                      ),
-                    ),
-                  ),
                 ),
-                const SizedBox(height: 8),
+                    SizedBox(height: SizeConfig.screenHeight * 0.03), // 24
 
-                // ── Card ──
-                Container(
-                  width: double.infinity,
-                  padding: const EdgeInsets.all(32),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(48),
-                    border: Border.all(
-                      color: AppColors.ghostBorder.withValues(alpha: 0.06),
+                    // ── Security Update badge ──
+                    FadeInUp(
+                      delay: const Duration(milliseconds: 200),
+                      duration: const Duration(milliseconds: 600),
+                      child: Align(
+                        alignment: Alignment.centerLeft,
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 16,
+                            vertical: 6,
+                          ),
+                          decoration: BoxDecoration(
+                            color: AppColors.accentGold,
+                            borderRadius: BorderRadius.circular(9999),
+                          ),
+                          child: Text(
+                            AppStrings.securityUpdate,
+                            style: GoogleFonts.inter(
+                              color: AppColors.accentGoldDark,
+                              fontSize: 12 * SizeConfig.textMultiplier,
+                              fontWeight: FontWeight.w700,
+                              letterSpacing: 0.6,
+                            ),
+                          ),
+                        ),
+                      ),
                     ),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withValues(alpha: 0.4),
-                        blurRadius: 80,
-                        offset: const Offset(0, 20),
-                      ),
-                    ],
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        AppStrings.setNewCredentials,
-                        style: GoogleFonts.newsreader(
-                          color: AppColors.textPrimary,
-                          fontSize: 30,
-                          letterSpacing: -0.75,
+                    SizedBox(height: SizeConfig.screenHeight * 0.01), // 8
+
+                    // ── Card ──
+                    FadeInUp(
+                      delay: const Duration(milliseconds: 300),
+                      duration: const Duration(milliseconds: 600),
+                      child: Container(
+                        width: double.infinity,
+                        padding: const EdgeInsets.all(32),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(48),
+                          border: Border.all(
+                            color: AppColors.ghostBorder.withValues(alpha: 0.06),
+                          ),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withValues(alpha: 0.4),
+                              blurRadius: 80,
+                              offset: const Offset(0, 20),
+                            ),
+                          ],
                         ),
-                      ),
-                      const SizedBox(height: 12),
-                      Text(
-                        AppStrings.resetSubtitle,
-                        style: GoogleFonts.inter(
-                          color: AppColors.silver.withValues(alpha: 0.8),
-                          fontSize: 14,
-                          height: 1.43,
-                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              AppStrings.setNewCredentials,
+                              style: GoogleFonts.newsreader(
+                                color: AppColors.textPrimary,
+                                fontSize: 30 * SizeConfig.textMultiplier,
+                                letterSpacing: -0.75,
+                              ),
+                            ),
+                            SizedBox(height: SizeConfig.screenHeight * 0.015), // 12
+                            Text(
+                              AppStrings.resetSubtitle,
+                              style: GoogleFonts.inter(
+                                color: AppColors.silver.withValues(alpha: 0.8),
+                                fontSize: 14 * SizeConfig.textMultiplier,
+                                height: 1.43,
+                              ),
                       ),
                       const SizedBox(height: 32),
 
@@ -203,64 +222,79 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                     ],
                   ),
                 ),
-                const SizedBox(height: 32),
+                ),
+                SizedBox(height: SizeConfig.screenHeight * 0.04), // 32
 
                 // Confirm button
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  child: AuthButton(
-                    label: AppStrings.confirmNewPassword,
-                    isPrimary: true,
-                    icon: Icons.arrow_forward,
-                    onPressed: () =>
-                        context.read<AuthCubit>().submitResetPassword(
-                              password: _passwordController.text,
-                              confirmPassword: _confirmController.text,
-                            ),
+                FadeInUp(
+                  delay: const Duration(milliseconds: 400),
+                  duration: const Duration(milliseconds: 600),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    child: AuthButton(
+                      label: AppStrings.confirmNewPassword,
+                      isPrimary: true,
+                      icon: Icons.arrow_forward,
+                      onPressed: () =>
+                          context.read<AuthCubit>().submitResetPassword(
+                                password: _passwordController.text,
+                                confirmPassword: _confirmController.text,
+                              ),
+                    ),
                   ),
                 ),
-                const SizedBox(height: 32),
+                SizedBox(height: SizeConfig.screenHeight * 0.04), // 32
 
                 // Return to portal
-                GestureDetector(
-                  onTap: () => context.read<AuthCubit>().showLogin(),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(
-                        Icons.timer_outlined,
-                        color: AppColors.silver.withValues(alpha: 0.4),
-                        size: 14,
-                      ),
-                      const SizedBox(width: 8),
-                      Text(
-                        AppStrings.returnToPortal,
-                        style: GoogleFonts.inter(
+                FadeInUp(
+                  delay: const Duration(milliseconds: 500),
+                  duration: const Duration(milliseconds: 600),
+                  child: GestureDetector(
+                    onTap: () => context.read<AuthCubit>().showLogin(),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.timer_outlined,
                           color: AppColors.silver.withValues(alpha: 0.4),
-                          fontSize: 12,
-                          letterSpacing: 1.2,
+                          size: 14,
                         ),
-                      ),
-                    ],
+                        const SizedBox(width: 8),
+                        Text(
+                          AppStrings.returnToPortal,
+                          style: GoogleFonts.inter(
+                            color: AppColors.silver.withValues(alpha: 0.4),
+                            fontSize: 12 * SizeConfig.textMultiplier,
+                            letterSpacing: 1.2,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
-                const SizedBox(height: 64),
+                SizedBox(height: SizeConfig.screenHeight * 0.08), // 64
 
                 // Obsidian Protocol
-                Text(
-                  'Obsidian Protocol v2.4',
-                  style: GoogleFonts.newsreader(
-                    color: AppColors.silver.withValues(alpha: 0.25),
-                    fontSize: 14,
-                    fontStyle: FontStyle.italic,
+                FadeInUp(
+                  delay: const Duration(milliseconds: 600),
+                  duration: const Duration(milliseconds: 600),
+                  child: Text(
+                    'Obsidian Protocol v2.4',
+                    style: GoogleFonts.newsreader(
+                      color: AppColors.silver.withValues(alpha: 0.25),
+                      fontSize: 14 * SizeConfig.textMultiplier,
+                      fontStyle: FontStyle.italic,
+                    ),
                   ),
                 ),
-                const SizedBox(height: 32),
+                SizedBox(height: SizeConfig.screenHeight * 0.04), // 32
               ],
             ),
           ),
+          ),
         ),
       ),
+    ),
     );
   }
 }

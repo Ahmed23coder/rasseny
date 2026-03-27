@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'core/di/service_locator.dart';
 import 'core/theme/app_theme.dart';
+import 'core/utils/size_config.dart';
 import 'features/onboarding/presentation/pages/splash_page.dart';
 
 void main() {
@@ -18,7 +19,13 @@ class RassenyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Rasseny',
       debugShowCheckedModeBanner: false,
-      theme: AppTheme.darkTheme,
+      builder: (context, child) {
+        SizeConfig().init(context);
+        return Theme(
+          data: AppTheme.darkTheme,
+          child: child!,
+        );
+      },
       home: const SplashPage(),
     );
   }

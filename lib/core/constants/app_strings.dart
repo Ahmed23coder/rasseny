@@ -17,7 +17,7 @@ abstract final class AppStrings {
   static const String passwordLabel = 'PASSWORD';
   static const String emailHint = 'curator@rasseny.com';
   static const String passwordHint = '••••••••';
-  static const String loginButton = 'Login to Archive';
+  static const String loginButton = 'Login';
   static const String forgotPassword = 'Forgot Password?';
   static const String orContinueWith = 'Or continue with';
   static const String github = 'GITHUB';
@@ -30,6 +30,10 @@ abstract final class AppStrings {
   static const String createYourAccount = 'Create your account';
   static const String fullNameLabel = 'FULL NAME';
   static const String fullNameHint = 'Archibald Sterling';
+  static const String phoneNumberLabel = 'PHONE NUMBER';
+  static const String phoneNumberHint = '12 345 6789';
+  static const String genderLabel = 'GENDER';
+  static const String confirmPasswordLabel = 'CONFIRM PASSWORD';
   static const String beginJourney = 'Begin Journey';
   static const String alreadyMember = 'Already a member? ';
   static const String signIn = 'Sign in';
@@ -67,7 +71,7 @@ abstract final class AppStrings {
       'Your security is our priority. Choose\n'
       'a password that reflects the depth\nof your account.';
   static const String newPasswordLabel = 'NEW PASSWORD';
-  static const String confirmPasswordLabel = 'CONFIRM NEW PASSWORD';
+  static const String confirmResetPasswordLabel = 'CONFIRM NEW PASSWORD';
   static const String confirmNewPassword = 'CONFIRM NEW\nPASSWORD';
   static const String securityLevel = 'SECURITY LEVEL';
   static const String returnToPortal = 'RETURN TO IDENTITY PORTAL';

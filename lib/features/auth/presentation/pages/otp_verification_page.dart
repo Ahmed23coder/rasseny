@@ -3,9 +3,11 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:animate_do/animate_do.dart';
 
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_strings.dart';
+import '../../../../core/utils/size_config.dart';
 import '../../logic/auth_cubit.dart';
 import '../../logic/auth_state.dart';
 import '../widgets/auth_button.dart';
@@ -41,70 +43,90 @@ class _OtpVerificationPageState extends State<OtpVerificationPage> {
     return Scaffold(
       backgroundColor: AppColors.scaffoldDark,
       body: SafeArea(
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.symmetric(horizontal: 32),
-          child: Column(
-            children: [
-              const SizedBox(height: 56),
+        child: Center(
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: 600),
+            child: SingleChildScrollView(
+              padding: const EdgeInsets.symmetric(horizontal: 32),
+              child: Column(
+                children: [
+                  SizedBox(height: SizeConfig.screenHeight * 0.07), // 56
 
-              // Anchor icon
-              Container(
-                width: 80,
-                height: 80,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  gradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    colors: [
-                      AppColors.inputBorderBlue.withValues(alpha: 0.3),
-                      AppColors.inputFillDark.withValues(alpha: 0.8),
-                    ],
-                  ),
-                ),
-                child: Center(
-                  child: SvgPicture.asset(
-                    AppStrings.logoPath,
-                    width: 26,
-                    height: 29,
-                    colorFilter: const ColorFilter.mode(
-                      AppColors.labelBlue,
-                      BlendMode.srcIn,
+                  // Anchor icon
+                  FadeInUp(
+                    duration: const Duration(milliseconds: 600),
+                    child: Hero(
+                      tag: 'logo_anchor',
+                      child: Container(
+                        width: 80,
+                        height: 80,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          gradient: LinearGradient(
+                            begin: Alignment.topCenter,
+                            end: Alignment.bottomCenter,
+                            colors: [
+                              AppColors.inputBorderBlue.withValues(alpha: 0.3),
+                              AppColors.inputFillDark.withValues(alpha: 0.8),
+                            ],
+                          ),
+                        ),
+                        child: Center(
+                          child: SvgPicture.asset(
+                            AppStrings.logoPath,
+                            width: 26,
+                            height: 29,
+                            colorFilter: const ColorFilter.mode(
+                              AppColors.labelBlue,
+                              BlendMode.srcIn,
+                            ),
+                          ),
+                        ),
+                      ),
                     ),
                   ),
-                ),
-              ),
-              const SizedBox(height: 40),
+                  SizedBox(height: SizeConfig.screenHeight * 0.05), // 40
 
-              // Title
-              Text(
-                AppStrings.secureYourAnchor,
-                textAlign: TextAlign.center,
-                style: GoogleFonts.newsreader(
-                  color: AppColors.textPrimary,
-                  fontSize: 48,
-                  fontWeight: FontWeight.w700,
-                  fontStyle: FontStyle.italic,
-                  letterSpacing: -2.4,
-                  height: 1.08,
-                ),
-              ),
-              const SizedBox(height: 24),
+                  // Title
+                  FadeInUp(
+                    delay: const Duration(milliseconds: 100),
+                    duration: const Duration(milliseconds: 600),
+                    child: Text(
+                      AppStrings.secureYourAnchor,
+                      textAlign: TextAlign.center,
+                      style: GoogleFonts.newsreader(
+                        color: AppColors.textPrimary,
+                        fontSize: 48 * SizeConfig.textMultiplier,
+                        fontWeight: FontWeight.w700,
+                        fontStyle: FontStyle.italic,
+                        letterSpacing: -2.4,
+                        height: 1.08,
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: SizeConfig.screenHeight * 0.03), // 24
 
-              // Subtitle
-              Text(
-                AppStrings.otpSubtitle,
-                textAlign: TextAlign.center,
-                style: GoogleFonts.inter(
-                  color: AppColors.silver.withValues(alpha: 0.6),
-                  fontSize: 16,
-                  height: 1.5,
-                ),
-              ),
-              const SizedBox(height: 56),
+                  // Subtitle
+                  FadeInUp(
+                    delay: const Duration(milliseconds: 200),
+                    duration: const Duration(milliseconds: 600),
+                    child: Text(
+                      AppStrings.otpSubtitle,
+                      textAlign: TextAlign.center,
+                      style: GoogleFonts.inter(
+                        color: AppColors.silver.withValues(alpha: 0.6),
+                        fontSize: 16 * SizeConfig.textMultiplier,
+                        height: 1.5,
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: SizeConfig.screenHeight * 0.07), // 56
 
-              // ── OTP Boxes ──
-              Row(
+                  // ── OTP Boxes ──
+                  FadeInUp(
+                    delay: const Duration(milliseconds: 300),
+                    duration: const Duration(milliseconds: 600),
+                    child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: List.generate(4, (index) {
                   return Container(
@@ -145,20 +167,21 @@ class _OtpVerificationPageState extends State<OtpVerificationPage> {
                       },
                     ),
                   );
-                }),
-              ),
-              const SizedBox(height: 56),
+                    }),
+                  ),
+                  ),
+                  SizedBox(height: SizeConfig.screenHeight * 0.07), // 56
 
-              // Verify button
+                  // Verify button
               AuthButton(
                 label: AppStrings.verifyIdentity,
                 isPrimary: false,
                 onPressed: () =>
                     context.read<AuthCubit>().submitOtp(_otp),
-              ),
-              const SizedBox(height: 32),
+                  ),
+                  SizedBox(height: SizeConfig.screenHeight * 0.04), // 32
 
-              // Timer
+                  // Timer
               BlocSelector<AuthCubit, AuthState, int>(
                 selector: (state) =>
                     state is OTPVerification ? state.remainingSeconds : 0,
@@ -186,10 +209,10 @@ class _OtpVerificationPageState extends State<OtpVerificationPage> {
                     ],
                   );
                 },
-              ),
-              const SizedBox(height: 24),
+                  ),
+                  SizedBox(height: SizeConfig.screenHeight * 0.03), // 24
 
-              // Try another way
+                  // Try another way
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -211,11 +234,13 @@ class _OtpVerificationPageState extends State<OtpVerificationPage> {
                         decorationColor: AppColors.labelBlue,
                       ),
                     ),
+                      ),
+                    ],
                   ),
+                  SizedBox(height: SizeConfig.screenHeight * 0.06), // 48
                 ],
               ),
-              const SizedBox(height: 48),
-            ],
+            ),
           ),
         ),
       ),

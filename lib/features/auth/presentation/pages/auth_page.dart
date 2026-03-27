@@ -11,6 +11,7 @@ import 'sign_up_page.dart';
 import 'otp_verification_page.dart';
 import 'forgot_password_page.dart';
 import 'reset_password_page.dart';
+import 'package:shimmer/shimmer.dart';
 import 'auth_success_page.dart';
 
 /// Top-level auth flow controller.
@@ -57,13 +58,23 @@ class _LoadingOverlay extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
       backgroundColor: AppColors.scaffoldDark,
       body: Center(
-        child: CircularProgressIndicator(
-          color: AppColors.silverGold,
+        child: Shimmer.fromColors(
+          baseColor: AppColors.slateBlue.withValues(alpha: 0.2),
+          highlightColor: AppColors.slateBlue.withValues(alpha: 0.5),
+          child: Container(
+            width: 200,
+            height: 200,
+            decoration: BoxDecoration(
+              color: AppColors.cardDark,
+              borderRadius: BorderRadius.circular(28),
+            ),
+          ),
         ),
       ),
     );
   }
 }
+
