@@ -7,6 +7,7 @@ import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_strings.dart';
 import '../../../../core/di/service_locator.dart';
 import '../../../auth/presentation/pages/auth_page.dart';
+import '../../../home/presentation/pages/home_page.dart';
 import 'onboarding_page.dart';
 import '../../logic/splash_cubit.dart';
 import '../../logic/splash_state.dart';
@@ -101,11 +102,7 @@ class _SplashViewState extends State<_SplashView> {
           );
         } else if (state is NavigateToHome) {
           Navigator.of(context).pushReplacement(
-            MaterialPageRoute(
-              builder: (_) => const Scaffold(
-                body: Center(child: Text('HOME PAGE')),
-              ),
-            ),
+            MaterialPageRoute(builder: (_) => const HomePage()),
           );
         }
       },

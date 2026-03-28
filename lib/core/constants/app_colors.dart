@@ -3,7 +3,7 @@ import 'dart:ui';
 /// Centralized color constants matching the Rasseny Obsidian design system.
 abstract final class AppColors {
   // ── Primary Background ──
-  static const Color midnightNavy = Color(0xFF001428);
+  static const Color midnightNavy = Color(0xFF102A43);
   static const Color scaffoldDark = Color(0xFF121315);
 
   // ── Radial Gradient Stops ──
@@ -14,6 +14,8 @@ abstract final class AppColors {
   // ── Accent & Text ──
   static const Color silver = Color(0xFFC6C6C6);
   static const Color subtitleBlue = Color(0xFF9AB8D8);
+  static const Color silverWhite = Color(0xFFF1F5F9);
+  static const Color precisionHighlight = Color(0xFFB0C9E8);
 
   // ── Onboarding ──
   static const Color headlineBlue = Color(0xFFD1E4FF);

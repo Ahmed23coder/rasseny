@@ -9,6 +9,7 @@ import 'core/utils/size_config.dart';
 import 'features/auth/logic/auth_bloc.dart';
 import 'features/auth/logic/auth_event.dart';
 import 'features/onboarding/presentation/pages/splash_page.dart';
+import 'features/home/presentation/pages/home_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -44,6 +45,9 @@ class RassenyApp extends StatelessWidget {
           );
         },
         home: const SplashPage(),
+        routes: {
+          '/home': (context) => const HomePage(),
+        },
       ),
     );
   }

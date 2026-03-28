@@ -5,6 +5,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import '../../features/auth/logic/auth_bloc.dart';
 import '../../../features/onboarding/logic/onboarding_cubit.dart';
 import '../../../features/onboarding/logic/splash_cubit.dart';
+import '../../features/home/data/repositories/home_repository.dart';
 
 final GetIt sl = GetIt.instance;
 
@@ -14,6 +15,7 @@ Future<void> initServiceLocator() async {
   final prefs = await SharedPreferences.getInstance();
   sl.registerLazySingleton<SharedPreferences>(() => prefs);
   sl.registerLazySingleton<SupabaseClient>(() => Supabase.instance.client);
+  sl.registerLazySingleton<HomeRepository>(() => HomeRepository());
 
   // ── Cubits & Blocs ──
   sl.registerLazySingleton<SplashCubit>(() => SplashCubit(sl<SupabaseClient>(), sl<SharedPreferences>()));
