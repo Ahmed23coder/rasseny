@@ -5,6 +5,7 @@ import '../../../core/typography/app_text_styles.dart';
 import '../../../core/utils/responsive_util.dart';
 
 /// Design-system text input with validation, password toggle, and icon support.
+
 class AppTextInput extends StatefulWidget {
   final String? hintText;
   final String? labelText;
@@ -20,6 +21,7 @@ class AppTextInput extends StatefulWidget {
   final ValueChanged<String>? onSubmitted;
   final bool enabled;
   final int? maxLines;
+  final String? errorText;
 
   const AppTextInput({
     super.key,
@@ -37,6 +39,7 @@ class AppTextInput extends StatefulWidget {
     this.onSubmitted,
     this.enabled = true,
     this.maxLines = 1,
+    this.errorText,
   });
 
   @override
@@ -54,34 +57,83 @@ class _AppTextInputState extends State<AppTextInput> {
 
   @override
   Widget build(BuildContext context) {
-    return TextFormField(
-      controller: widget.controller,
-      validator: widget.validator,
-      obscureText: _obscured,
-      keyboardType: widget.keyboardType,
-      textInputAction: widget.textInputAction,
-      onChanged: widget.onChanged,
-      onFieldSubmitted: widget.onSubmitted,
-      enabled: widget.enabled,
-      maxLines: widget.maxLines,
-      style: AppTextStyles.inputText(context),
-      decoration: InputDecoration(
-        hintText: widget.hintText,
-        labelText: widget.labelText,
-        labelStyle: TextStyle(
-          fontFamily: 'Inter',
-          fontSize: context.scaleFontSize(14),
-          color: AppColors.silverSecondaryLabel,
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        TextFormField(
+          controller: widget.controller,
+          validator: widget.validator,
+          obscureText: _obscured,
+          keyboardType: widget.keyboardType,
+          textInputAction: widget.textInputAction,
+          onChanged: widget.onChanged,
+          onFieldSubmitted: widget.onSubmitted,
+          enabled: widget.enabled,
+          maxLines: widget.maxLines,
+          style: AppTextStyles.inputText(context),
+          decoration: InputDecoration(
+            hintText: widget.hintText,
+            hintStyle: TextStyle(
+              fontFamily: 'Inter',
+              fontSize: context.scaleFontSize(14),
+              fontWeight: FontWeight.w400,
+              color: AppColors.silverPlaceholder,
+            ),
+            labelText: widget.labelText,
+            labelStyle: TextStyle(
+              fontFamily: 'Inter',
+              fontSize: context.scaleFontSize(14),
+              color: AppColors.silverSecondaryLabel,
+            ),
+            prefixIcon: widget.prefixIcon != null
+                ? Icon(
+                    widget.prefixIcon,
+                    color: AppColors.silverPlaceholder,
+                    size: 20,
+                  )
+                : null,
+            suffixIcon: _buildSuffix(),
+            contentPadding: EdgeInsets.symmetric(
+              horizontal: context.scaleWidth(24),
+              vertical: context.scaleHeight(16),
+            ),
+            // Border Styling
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(50),
+              borderSide: BorderSide(color: AppColors.silverBorder, width: 1.185),
+            ),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(50),
+              borderSide: BorderSide(color: AppColors.silverBorder, width: 1.185),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(50),
+              borderSide: const BorderSide(color: AppColors.primaryAccent, width: 1.185),
+            ),
+            // Error Styling
+            errorText: widget.errorText,
+            errorStyle: const TextStyle(height: 0, fontSize: 0),
+            errorBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(50),
+              borderSide: const BorderSide(color: AppColors.destructive, width: 1.185),
+            ),
+            focusedErrorBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(50),
+              borderSide: const BorderSide(color: AppColors.destructive, width: 1.5),
+            ),
+          ),
         ),
-        prefixIcon: widget.prefixIcon != null
-            ? Icon(
-                widget.prefixIcon,
-                color: AppColors.silverPlaceholder,
-                size: 20,
-              )
-            : null,
-        suffixIcon: _buildSuffix(),
-      ),
+        if (widget.errorText != null && widget.errorText!.isNotEmpty) ...[
+          SizedBox(height: context.scaleHeight(8)),
+          Padding(
+            padding: EdgeInsets.only(left: context.scaleWidth(12)),
+            child: Text(
+              widget.errorText!,
+              style: AppTextStyles.error(context),
+            ),
+          ),
+        ],
+      ],
     );
   }
 
@@ -90,8 +142,8 @@ class _AppTextInputState extends State<AppTextInput> {
       return IconButton(
         icon: Icon(
           _obscured ? Icons.visibility_off_outlined : Icons.visibility_outlined,
-          color: AppColors.silverPlaceholder,
-          size: 20,
+          color: _obscured ? AppColors.silverPlaceholder : AppColors.foreground,
+          size: 22,
         ),
         onPressed: () => setState(() => _obscured = !_obscured),
       );

@@ -110,4 +110,12 @@ class AppTextStyles {
     fontSize: context.scaleFontSize(9.5),
     color: AppColors.silverTimestamp,
   );
+
+  /// Error Text — Inter 400, 12, decorative
+  static TextStyle error(BuildContext context) => TextStyle(
+    fontFamily: _body,
+    fontWeight: FontWeight.w400,
+    fontSize: context.scaleFontSize(12),
+    color: AppColors.destructive,
+  );
 }

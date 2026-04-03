@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../domain/repositories/news_repository.dart';
+
 import '../../../core/colors/app_colors.dart';
 import '../../../core/spacing/app_spacing.dart';
 import '../../../core/typography/app_text_styles.dart';
@@ -18,7 +20,7 @@ class HomeView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => HomeCubit()..load(),
+      create: (context) => HomeCubit(context.read<NewsRepository>())..load(),
       child: const _HomeBody(),
     );
   }
@@ -92,8 +94,12 @@ class _HomeBody extends StatelessWidget {
                 child: BlocBuilder<HomeCubit, HomeState>(
                   buildWhen: (p, c) =>
                       p.categories != c.categories ||
-                      p.selectedCategory != c.selectedCategory,
+                      p.selectedCategory != c.selectedCategory ||
+                      p.status != c.status,
                   builder: (context, state) {
+                    if (state.status == HomeStatus.loading && state.categories.isEmpty) {
+                      return const Center(child: CircularProgressIndicator());
+                    }
                     return ListView.separated(
                       scrollDirection: Axis.horizontal,
                       padding: padding,
@@ -135,8 +141,24 @@ class _HomeBody extends StatelessWidget {
 
           // ── Article list ──────────────────────────────────────
           BlocBuilder<HomeCubit, HomeState>(
-            buildWhen: (p, c) => p.articles != c.articles,
+            buildWhen: (p, c) => p.articles != c.articles || p.status != c.status,
             builder: (context, state) {
+              if (state.status == HomeStatus.loading && state.articles.isEmpty) {
+                return const SliverFillRemaining(
+                  child: Center(child: CircularProgressIndicator()),
+                );
+              }
+              if (state.status == HomeStatus.error) {
+                return SliverFillRemaining(
+                  child: Center(
+                    child: Text(
+                      state.errorMessage ?? 'Failed to load articles',
+                      style: AppTextStyles.error(context),
+                    ),
+                  ),
+                );
+              }
+
               return SliverPadding(
                 padding: padding.copyWith(
                   bottom: AppSpacing.bottomScrollPadding(context),

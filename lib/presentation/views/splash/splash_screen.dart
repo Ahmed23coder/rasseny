@@ -1,11 +1,11 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../core/colors/app_colors.dart';
 import '../../../core/navigation/app_router.dart';
+import '../../../core/theme/glass_surface.dart';
 import '../../../core/typography/app_text_styles.dart';
 import '../../../core/utils/app_animations.dart';
 import '../../../core/utils/responsive_util.dart';
@@ -201,13 +201,19 @@ class _SplashViewState extends State<_SplashView>
                         );
                       },
                       child: SizedBox(
-                        width: context.scaleWidth(96),
-                        height: context.scaleWidth(96),
-                        child: SvgPicture.asset(
-                          'assets/svg/anchor_logo.svg',
-                          colorFilter: const ColorFilter.mode(
-                            AppColors.primaryAccent,
-                            BlendMode.srcIn,
+                        child: Container(
+                          width: context.scaleWidth(80),
+                          height: context.scaleWidth(80),
+                          decoration: GlassSurface.decoration(
+                            intensity: GlassIntensity.subtle,
+                            borderRadius: BorderRadius.circular(50),
+                            borderWidth: 1.185,
+                          ),
+                          alignment: Alignment.center,
+                          child: Icon(
+                            Icons.anchor,
+                            color: AppColors.foreground,
+                            size: context.scaleWidth(40),
                           ),
                         ),
                       ),

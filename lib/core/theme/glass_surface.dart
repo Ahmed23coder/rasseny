@@ -1,6 +1,8 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 
+import '../../../core/colors/app_colors.dart';
+
 /// Glass intensity presets matching the design spec.
 enum GlassIntensity { subtle, standard, elevated }
 
@@ -11,6 +13,7 @@ class GlassSurface extends StatelessWidget {
   final double blurSigma;
   final BorderRadius? borderRadius;
   final EdgeInsetsGeometry? padding;
+  final double borderWidth;
 
   const GlassSurface({
     super.key,
@@ -19,6 +22,7 @@ class GlassSurface extends StatelessWidget {
     this.blurSigma = 12.0,
     this.borderRadius,
     this.padding,
+    this.borderWidth = 1.0,
   });
 
   factory GlassSurface.subtle({
@@ -26,12 +30,14 @@ class GlassSurface extends StatelessWidget {
     required Widget child,
     BorderRadius? borderRadius,
     EdgeInsetsGeometry? padding,
+    double borderWidth = 1.0,
   }) => GlassSurface(
     key: key,
     intensity: GlassIntensity.subtle,
     blurSigma: 8.0,
     borderRadius: borderRadius,
     padding: padding,
+    borderWidth: borderWidth,
     child: child,
   );
 
@@ -40,12 +46,14 @@ class GlassSurface extends StatelessWidget {
     required Widget child,
     BorderRadius? borderRadius,
     EdgeInsetsGeometry? padding,
+    double borderWidth = 1.0,
   }) => GlassSurface(
     key: key,
     intensity: GlassIntensity.standard,
     blurSigma: 12.0,
     borderRadius: borderRadius,
     padding: padding,
+    borderWidth: borderWidth,
     child: child,
   );
 
@@ -54,25 +62,27 @@ class GlassSurface extends StatelessWidget {
     required Widget child,
     BorderRadius? borderRadius,
     EdgeInsetsGeometry? padding,
+    double borderWidth = 2.0,
   }) => GlassSurface(
     key: key,
     intensity: GlassIntensity.elevated,
     blurSigma: 20.0,
     borderRadius: borderRadius,
     padding: padding,
+    borderWidth: borderWidth,
     child: child,
   );
 
   Color get _backgroundColor => switch (intensity) {
-    GlassIntensity.subtle => Colors.white.withValues(alpha: 0.05),
-    GlassIntensity.standard => Colors.white.withValues(alpha: 0.08),
-    GlassIntensity.elevated => Colors.white.withValues(alpha: 0.10),
+    GlassIntensity.subtle => AppColors.primaryAccent.withValues(alpha: 0.05),
+    GlassIntensity.standard => AppColors.primaryAccent.withValues(alpha: 0.08),
+    GlassIntensity.elevated => AppColors.primaryAccent.withValues(alpha: 0.10),
   };
 
   Color get _borderColor => switch (intensity) {
-    GlassIntensity.subtle => Colors.white.withValues(alpha: 0.08),
-    GlassIntensity.standard => Colors.white.withValues(alpha: 0.10),
-    GlassIntensity.elevated => Colors.white.withValues(alpha: 0.20),
+    GlassIntensity.subtle => AppColors.primaryAccent.withValues(alpha: 0.08),
+    GlassIntensity.standard => AppColors.primaryAccent.withValues(alpha: 0.10),
+    GlassIntensity.elevated => AppColors.primaryAccent.withValues(alpha: 0.20),
   };
 
   @override
@@ -87,7 +97,7 @@ class GlassSurface extends StatelessWidget {
           decoration: BoxDecoration(
             color: _backgroundColor,
             borderRadius: radius,
-            border: Border.all(color: _borderColor),
+            border: Border.all(color: _borderColor, width: borderWidth),
           ),
           child: child,
         ),
@@ -99,25 +109,26 @@ class GlassSurface extends StatelessWidget {
   static BoxDecoration decoration({
     GlassIntensity intensity = GlassIntensity.standard,
     BorderRadius? borderRadius,
+    double borderWidth = 1.0,
   }) {
     final (bg, border) = switch (intensity) {
       GlassIntensity.subtle => (
-        Colors.white.withValues(alpha: 0.05),
-        Colors.white.withValues(alpha: 0.08),
+        AppColors.primaryAccent.withValues(alpha: 0.05),
+        AppColors.primaryAccent.withValues(alpha: 0.08),
       ),
       GlassIntensity.standard => (
-        Colors.white.withValues(alpha: 0.08),
-        Colors.white.withValues(alpha: 0.10),
+        AppColors.primaryAccent.withValues(alpha: 0.08),
+        AppColors.primaryAccent.withValues(alpha: 0.10),
       ),
       GlassIntensity.elevated => (
-        Colors.white.withValues(alpha: 0.10),
-        Colors.white.withValues(alpha: 0.20),
+        AppColors.primaryAccent.withValues(alpha: 0.10),
+        AppColors.primaryAccent.withValues(alpha: 0.20),
       ),
     };
     return BoxDecoration(
       color: bg,
       borderRadius: borderRadius ?? BorderRadius.circular(24),
-      border: Border.all(color: border),
+      border: Border.all(color: border, width: borderWidth),
     );
   }
 }

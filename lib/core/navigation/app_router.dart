@@ -1,9 +1,16 @@
 import 'package:go_router/go_router.dart';
 
 import '../../presentation/shell/app_shell.dart';
+import '../../presentation/views/auth/auth_success_screen.dart';
+import '../../presentation/views/auth/forgot_password_screen.dart';
+import '../../presentation/views/auth/interests_screen.dart';
+import '../../presentation/views/auth/login_screen.dart';
+import '../../presentation/views/auth/otp_screen.dart';
+import '../../presentation/views/auth/reset_password_screen.dart';
+import '../../presentation/views/auth/signup_screen.dart';
+import '../../presentation/views/onboarding/onboarding_screen.dart';
 import '../../presentation/views/splash/splash_screen.dart';
 import '../../presentation/views/stub_screen.dart';
-import '../../presentation/views/onboarding/onboarding_screen.dart';
 
 /// Declarative navigation with [GoRouter].
 ///
@@ -15,12 +22,13 @@ class AppRouter {
   // ── Route names ────────────────────────────────────────────────
   static const String splash = '/splash';
   static const String shell = '/';
-  static const String login = '/login';
-  static const String register = '/register';
-  static const String forgotPassword = '/forgot-password';
-  static const String otp = '/otp';
-  static const String resetPassword = '/reset-password';
-  static const String interests = '/interests';
+  static const String login = '/auth';
+  static const String signup = '/auth/signup';
+  static const String forgotPassword = '/auth/forgot-password';
+  static const String otp = '/auth/otp';
+  static const String resetPassword = '/auth/reset-password';
+  static const String interests = '/auth/interests';
+  static const String authSuccess = '/auth/success';
   static const String onboarding = '/onboarding';
   static const String articleDetail = '/article/:id';
   static const String summarize = '/summarize/:id';
@@ -47,27 +55,34 @@ class AppRouter {
       // ── Auth flow ────────────────────────────────────────────
       GoRoute(
         path: login,
-        builder: (_, __) => const StubScreen(title: 'Login'),
+        builder: (_, __) => const LoginScreen(),
       ),
       GoRoute(
-        path: register,
-        builder: (_, __) => const StubScreen(title: 'Register'),
+        path: signup,
+        builder: (_, __) => const SignupScreen(),
       ),
       GoRoute(
         path: forgotPassword,
-        builder: (_, __) => const StubScreen(title: 'Forgot Password'),
+        builder: (_, __) => const ForgotPasswordScreen(),
       ),
       GoRoute(
         path: otp,
-        builder: (_, __) => const StubScreen(title: 'OTP'),
+        builder: (_, state) {
+          final isFromSignup = state.extra as bool? ?? false;
+          return OtpScreen(isFromSignup: isFromSignup);
+        },
       ),
       GoRoute(
         path: resetPassword,
-        builder: (_, __) => const StubScreen(title: 'Reset Password'),
+        builder: (_, __) => const ResetPasswordScreen(),
       ),
       GoRoute(
         path: interests,
-        builder: (_, __) => const StubScreen(title: 'Interests'),
+        builder: (_, __) => const InterestsScreen(),
+      ),
+      GoRoute(
+        path: authSuccess,
+        builder: (_, __) => const AuthSuccessScreen(),
       ),
       GoRoute(
         path: onboarding,

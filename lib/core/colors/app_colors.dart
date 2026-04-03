@@ -27,6 +27,12 @@ class AppColors {
   static Color get borderColor => primaryAccent.withValues(alpha: 0.20);
 
   // ── Silver Opacity Helpers ───────────────────────────────────
+  /// 80 % — High emphasis
+  static Color get silver80 => primaryAccent.withValues(alpha: 0.80);
+
+  /// 70 % — Medium emphasis
+  static Color get silver70 => primaryAccent.withValues(alpha: 0.70);
+
   /// 60 % — secondary labels
   static Color get silverSecondaryLabel =>
       primaryAccent.withValues(alpha: 0.60);
@@ -47,8 +53,20 @@ class AppColors {
   static Color get silverInactivePill => primaryAccent.withValues(alpha: 0.15);
 
   /// 10 % — faint backgrounds
-  static Color get silverFaint => primaryAccent.withValues(alpha: 0.10);
+  static Color get silver10 => primaryAccent.withValues(alpha: 0.10);
 
-  /// 5 % — glass surfaces
+  /// 10 % — legacy alias
+  static Color get silverFaint => silver10;
+
+  /// 8 % — container backgrounds
+  static Color get silver08 => primaryAccent.withValues(alpha: 0.08);
+
+  /// 6 % — subtle backgrounds
+  static Color get silver06 => primaryAccent.withValues(alpha: 0.06);
+
+  /// 4 % — barely visible
+  static Color get silver04 => primaryAccent.withValues(alpha: 0.04);
+
+  /// 5 % — legacy glass surface (keep for compatibility)
   static Color get silverGlass => primaryAccent.withValues(alpha: 0.05);
 }
