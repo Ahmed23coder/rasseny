@@ -1,10 +1,11 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 
 import '../../../core/colors/app_colors.dart';
 import '../../../core/utils/responsive_util.dart';
 
-/// Bottom navigation bar with 6 tabs, silver active indicator, and frosted glass.
+/// Bottom navigation bar with 6 tabs using LucideIcons and glassmorphism.
 class AppBottomNavBar extends StatelessWidget {
   final int currentIndex;
   final ValueChanged<int> onTap;
@@ -16,38 +17,18 @@ class AppBottomNavBar extends StatelessWidget {
   });
 
   static const _tabs = <_NavTab>[
-    _NavTab(icon: Icons.home_outlined, activeIcon: Icons.home, label: 'Home'),
-    _NavTab(
-      icon: Icons.search_outlined,
-      activeIcon: Icons.search,
-      label: 'Search',
-    ),
-    _NavTab(
-      icon: Icons.auto_awesome_outlined,
-      activeIcon: Icons.auto_awesome,
-      label: 'Summarize',
-    ),
-    _NavTab(
-      icon: Icons.fact_check_outlined,
-      activeIcon: Icons.fact_check,
-      label: 'Fact Check',
-    ),
-    _NavTab(
-      icon: Icons.folder_outlined,
-      activeIcon: Icons.folder,
-      label: 'Vault',
-    ),
-    _NavTab(
-      icon: Icons.person_outline,
-      activeIcon: Icons.person,
-      label: 'Profile',
-    ),
+    _NavTab(icon: LucideIcons.house, label: 'Home'),
+    _NavTab(icon: LucideIcons.search, label: 'Search'),
+    _NavTab(icon: LucideIcons.sparkles, label: 'Summarize'),
+    _NavTab(icon: LucideIcons.shieldCheck, label: 'Fact Check'),
+    _NavTab(icon: LucideIcons.bookmark, label: 'Vault'),
+    _NavTab(icon: LucideIcons.user, label: 'Profile'),
   ];
 
   @override
   Widget build(BuildContext context) {
     final maxWidth = context.scaleWidth(393);
-    final barHeight = context.scaleHeight(64);
+    final barHeight = context.scaleHeight(68); // Adjusted slightly for Lucide sizing
 
     return Align(
       alignment: Alignment.bottomCenter,
@@ -62,7 +43,7 @@ class AppBottomNavBar extends StatelessWidget {
             ),
             decoration: BoxDecoration(
               color: AppColors.background.withValues(alpha: 0.95),
-              border: Border(top: BorderSide(color: AppColors.silverBorder)),
+              border: Border(top: BorderSide(color: AppColors.silverBorder, width: 0.5)),
             ),
             child: Row(
               children: List.generate(_tabs.length, (i) {
@@ -87,15 +68,11 @@ class AppBottomNavBar extends StatelessWidget {
   }
 }
 
-// ── Private helpers ──────────────────────────────────────────────
-
 class _NavTab {
   final IconData icon;
-  final IconData activeIcon;
   final String label;
   const _NavTab({
     required this.icon,
-    required this.activeIcon,
     required this.label,
   });
 }
@@ -115,32 +92,36 @@ class _TabItem extends StatelessWidget {
   Widget build(BuildContext context) {
     final iconColor = active
         ? AppColors.primaryAccent
-        : AppColors.primaryAccent.withValues(alpha: 0.30);
+        : AppColors.primaryAccent.withValues(alpha: 0.35);
 
     return SizedBox(
       height: barHeight,
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
         children: [
-          // Silver active indicator bar
+          // Active Indicator
           AnimatedContainer(
-            duration: const Duration(milliseconds: 200),
+            duration: const Duration(milliseconds: 250),
             height: 3,
-            width: active ? 24 : 0,
+            width: active ? context.scaleWidth(24) : 0,
             decoration: BoxDecoration(
               color: active ? AppColors.primaryAccent : Colors.transparent,
               borderRadius: BorderRadius.circular(2),
             ),
           ),
           const Spacer(),
-          Icon(active ? tab.activeIcon : tab.icon, color: iconColor, size: 24),
+          Icon(
+            tab.icon,
+            color: iconColor,
+            size: context.scaleWidth(22),
+          ),
           const SizedBox(height: 4),
           Text(
             tab.label,
             style: TextStyle(
               fontFamily: 'Inter',
-              fontSize: 10,
-              fontWeight: active ? FontWeight.w600 : FontWeight.w400,
+              fontSize: context.scaleFontSize(10),
+              fontWeight: active ? FontWeight.bold : FontWeight.normal,
               color: iconColor,
             ),
           ),

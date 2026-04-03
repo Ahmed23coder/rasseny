@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 import '../../../core/colors/app_colors.dart';
 import '../../../core/typography/app_text_styles.dart';
 import '../../../core/utils/responsive_util.dart';
@@ -141,7 +141,7 @@ class _AppTextInputState extends State<AppTextInput> {
     if (widget.showPasswordToggle) {
       return IconButton(
         icon: Icon(
-          _obscured ? Icons.visibility_off_outlined : Icons.visibility_outlined,
+          _obscured ? LucideIcons.eyeOff : LucideIcons.eye,
           color: _obscured ? AppColors.silverPlaceholder : AppColors.foreground,
           size: 22,
         ),

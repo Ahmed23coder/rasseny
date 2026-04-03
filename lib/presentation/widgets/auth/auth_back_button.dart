@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:go_router/go_router.dart';
 import '../../../core/colors/app_colors.dart';
 import '../../../core/theme/glass_surface.dart';
@@ -25,7 +26,7 @@ class AuthBackButton extends StatelessWidget {
         ),
         alignment: Alignment.center,
         child: Icon(
-          Icons.chevron_left,
+          LucideIcons.chevronLeft,
           color: AppColors.foreground,
           size: context.scaleWidth(20),
         ),

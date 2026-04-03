@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 import '../../../core/colors/app_colors.dart';
 import '../../../core/typography/app_text_styles.dart';
 import '../../../core/utils/responsive_util.dart';
@@ -32,7 +33,7 @@ class AuthHeader extends StatelessWidget {
           ),
           alignment: Alignment.center,
           child: Icon(
-            Icons.anchor,
+            LucideIcons.anchor,
             color: AppColors.foreground,
             size: context.scaleWidth(circleSize * 0.5),
           ),
