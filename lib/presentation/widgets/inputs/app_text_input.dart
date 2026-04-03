@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 import '../../../core/colors/app_colors.dart';
+import '../../../core/radius/app_radius.dart';
 import '../../../core/typography/app_text_styles.dart';
 import '../../../core/utils/responsive_util.dart';
 
@@ -99,26 +100,26 @@ class _AppTextInputState extends State<AppTextInput> {
             ),
             // Border Styling
             border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(50),
-              borderSide: BorderSide(color: AppColors.silverBorder, width: 1.185),
+              borderRadius: AppRadius.button,
+              borderSide: BorderSide(color: AppColors.silverBorder, width: AppRadius.buttonValue),
             ),
             enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(50),
-              borderSide: BorderSide(color: AppColors.silverBorder, width: 1.185),
+              borderRadius: AppRadius.button,
+              borderSide: BorderSide(color: AppColors.silverBorder, width: AppRadius.buttonValue),
             ),
             focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(50),
-              borderSide: const BorderSide(color: AppColors.primaryAccent, width: 1.185),
+              borderRadius: AppRadius.button,
+              borderSide: BorderSide(color: AppColors.primaryAccent, width: AppRadius.buttonValue),
             ),
             // Error Styling
             errorText: widget.errorText,
             errorStyle: const TextStyle(height: 0, fontSize: 0),
             errorBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(50),
-              borderSide: const BorderSide(color: AppColors.destructive, width: 1.185),
+              borderRadius: AppRadius.button,
+              borderSide: BorderSide(color: AppColors.destructive, width: AppRadius.buttonValue),
             ),
             focusedErrorBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(50),
+              borderRadius: AppRadius.button,
               borderSide: const BorderSide(color: AppColors.destructive, width: 1.5),
             ),
           ),

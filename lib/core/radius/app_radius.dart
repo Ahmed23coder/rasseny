@@ -8,11 +8,16 @@ class AppRadius {
   AppRadius._();
 
   // ── Raw values ───────────────────────────────────────────────
-  /// Buttons / Inputs / Pills / Icon buttons
-  static const double buttonValue = 50.0;
+  /// Global border width (frosted glass standard)
+  static const double buttonValue = 1.185;
 
+  /// Pill-style radius (Buttons / Inputs / Pills)
+  static const double pillValue = 50.0;
+  
+  // ── Card values ──────────────────────────────────────────────
   /// Cards / Articles
   static const double cardValue = 24.0;
+
 
   /// Settings groups
   static const double settingsGroupValue = 28.0;
@@ -30,7 +35,7 @@ class AppRadius {
   static const double circularValue = 9999.0;
 
   // ── BorderRadius shortcuts ───────────────────────────────────
-  static final BorderRadius button = BorderRadius.circular(buttonValue);
+  static final BorderRadius button = BorderRadius.circular(pillValue);
   static final BorderRadius card = BorderRadius.circular(cardValue);
   static final BorderRadius settingsGroup = BorderRadius.circular(
     settingsGroupValue,

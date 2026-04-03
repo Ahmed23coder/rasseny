@@ -17,12 +17,36 @@ class AppBottomNavBar extends StatelessWidget {
   });
 
   static const _tabs = <_NavTab>[
-    _NavTab(icon: LucideIcons.house, label: 'Home'),
-    _NavTab(icon: LucideIcons.search, label: 'Search'),
-    _NavTab(icon: LucideIcons.sparkles, label: 'Summarize'),
-    _NavTab(icon: LucideIcons.shieldCheck, label: 'Fact Check'),
-    _NavTab(icon: LucideIcons.bookmark, label: 'Vault'),
-    _NavTab(icon: LucideIcons.user, label: 'Profile'),
+    _NavTab(
+      activeIcon: LucideIcons.house600,
+      inactiveIcon: LucideIcons.house400,
+      label: 'Home',
+    ),
+    _NavTab(
+      activeIcon: LucideIcons.search600,
+      inactiveIcon: LucideIcons.search400,
+      label: 'Search',
+    ),
+    _NavTab(
+      activeIcon: LucideIcons.sparkles600,
+      inactiveIcon: LucideIcons.sparkles400,
+      label: 'Summarize',
+    ),
+    _NavTab(
+      activeIcon: LucideIcons.shieldCheck600,
+      inactiveIcon: LucideIcons.shieldCheck400,
+      label: 'Fact Check',
+    ),
+    _NavTab(
+      activeIcon: LucideIcons.bookmark600,
+      inactiveIcon: LucideIcons.bookmark400,
+      label: 'Vault',
+    ),
+    _NavTab(
+      activeIcon: LucideIcons.user600,
+      inactiveIcon: LucideIcons.user400,
+      label: 'Profile',
+    ),
   ];
 
   @override
@@ -69,10 +93,12 @@ class AppBottomNavBar extends StatelessWidget {
 }
 
 class _NavTab {
-  final IconData icon;
+  final IconData activeIcon;
+  final IconData inactiveIcon;
   final String label;
   const _NavTab({
-    required this.icon,
+    required this.activeIcon,
+    required this.inactiveIcon,
     required this.label,
   });
 }
@@ -111,7 +137,7 @@ class _TabItem extends StatelessWidget {
           ),
           const Spacer(),
           Icon(
-            tab.icon,
+            active ? tab.activeIcon : tab.inactiveIcon,
             color: iconColor,
             size: context.scaleWidth(22),
           ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 
 import '../../../core/colors/app_colors.dart';
 import '../../../core/radius/app_radius.dart';
@@ -40,7 +41,7 @@ class AppSearchBar extends StatelessWidget {
             color: AppColors.silverPlaceholder,
           ),
           prefixIcon: Icon(
-            Icons.search,
+            LucideIcons.search,
             color: AppColors.silverPlaceholder,
             size: 20,
           ),
@@ -51,7 +52,7 @@ class AppSearchBar extends StatelessWidget {
                     if (value.text.isEmpty) return const SizedBox.shrink();
                     return IconButton(
                       icon: Icon(
-                        Icons.close,
+                        LucideIcons.x,
                         color: AppColors.silverPlaceholder,
                         size: 18,
                       ),

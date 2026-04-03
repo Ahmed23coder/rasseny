@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import '../../../core/colors/app_colors.dart';
 import '../../../core/navigation/app_router.dart';
+import '../../../core/spacing/app_spacing.dart';
 import '../../../core/utils/responsive_util.dart';
 import '../../../domain/repositories/auth_repository.dart';
 import '../../viewmodels/auth/login_cubit.dart';
@@ -49,7 +50,7 @@ class _LoginView extends StatelessWidget {
           
           return SafeArea(
             child: SingleChildScrollView(
-              padding: EdgeInsets.symmetric(horizontal: context.scaleWidth(24)),
+              padding: AppSpacing.pagePadding(context),
               child: Column(
                 children: [
                   SizedBox(height: context.scaleHeight(40)),

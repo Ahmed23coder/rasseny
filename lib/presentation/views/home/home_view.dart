@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 
 import '../../../domain/repositories/news_repository.dart';
 
@@ -51,7 +52,7 @@ class _HomeBody extends StatelessWidget {
                         Text('Rasseny', style: AppTextStyles.appName(context)),
                         const Spacer(),
                         Icon(
-                          Icons.notifications_outlined,
+                          LucideIcons.bell,
                           color: AppColors.silverSecondaryLabel,
                           size: 24,
                         ),

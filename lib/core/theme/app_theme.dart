@@ -90,7 +90,7 @@ class AppTheme {
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: AppRadius.button,
-          borderSide: BorderSide(color: AppColors.silverSecondaryLabel),
+          borderSide: BorderSide(color: AppColors.silverBorder),
         ),
         errorBorder: OutlineInputBorder(
           borderRadius: AppRadius.button,
