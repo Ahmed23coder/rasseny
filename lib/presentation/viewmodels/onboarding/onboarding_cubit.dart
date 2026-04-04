@@ -6,6 +6,27 @@ import 'onboarding_state.dart';
 class OnboardingCubit extends Cubit<OnboardingState> {
   final PageController pageController;
 
+  static const List<Map<String, String>> onboardingOverlays = [
+    {
+      'title': 'Intelligence,\nReimagined.',
+      'subtitle':
+          'Your personalized news experience powered by insight and clarity.',
+      'buttonText': 'Next',
+    },
+    {
+      'title': 'Curated For You.',
+      'subtitle':
+          'AI-driven editorial picks tailored to your interests and worldview.',
+      'buttonText': 'Continue',
+    },
+    {
+      'title': 'Stay Ahead.\nStay Informed.',
+      'subtitle':
+          'Breaking stories, deep analysis, and perspectives that matter.',
+      'buttonText': 'Get Started',
+    },
+  ];
+
   OnboardingCubit() 
       : pageController = PageController(initialPage: 0),
         super(OnboardingState.initial());

@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../core/colors/app_colors.dart';
 import '../../../core/navigation/app_router.dart';
+import '../../../core/radius/app_radius.dart';
 import '../../../core/typography/app_text_styles.dart';
 import '../../../core/utils/responsive_util.dart';
 import '../../viewmodels/onboarding/onboarding_cubit.dart';
@@ -29,26 +30,6 @@ class _OnboardingView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final cubit = context.read<OnboardingCubit>();
-    final overlays = [
-      {
-        'title': 'Intelligence,\nReimagined.',
-        'subtitle':
-            'Your personalized news experience powered by insight and clarity.',
-        'buttonText': 'Next',
-      },
-      {
-        'title': 'Curated For You.',
-        'subtitle':
-            'AI-driven editorial picks tailored to your interests and worldview.',
-        'buttonText': 'Continue',
-      },
-      {
-        'title': 'Stay Ahead.\nStay Informed.',
-        'subtitle':
-            'Breaking stories, deep analysis, and perspectives that matter.',
-        'buttonText': 'Get Started',
-      },
-    ];
 
     return Scaffold(
       backgroundColor: AppColors.background,
@@ -158,7 +139,7 @@ class _OnboardingView extends StatelessWidget {
             ],
           ),
           // Layer 3: Static global overlay
-          _OnboardingOverlay(overlays: overlays),
+          _OnboardingOverlay(),
         ],
       ),
     );
@@ -169,13 +150,12 @@ class _OnboardingView extends StatelessWidget {
 // SHARED OVERLAY WIDGET FOR PROGRESS & CTA
 // ──────────────────────────────────────────────────────────────────
 class _OnboardingOverlay extends StatelessWidget {
-  final List<Map<String, String>> overlays;
-
-  const _OnboardingOverlay({required this.overlays});
+  const _OnboardingOverlay();
 
   @override
   Widget build(BuildContext context) {
     final cubit = context.read<OnboardingCubit>();
+    final overlays = OnboardingCubit.onboardingOverlays;
     return Align(
       alignment: Alignment.bottomCenter,
       child: Container(
@@ -218,7 +198,7 @@ class _OnboardingOverlay extends StatelessWidget {
                       );
                       if (opacity == 0) return const SizedBox.shrink();
 
-                      final slideOffset = (page - index) * 50.0;
+                      final slideOffset = (page - index) * context.scaleHeight(50.0);
                       return Transform.translate(
                         offset: Offset(0, slideOffset),
                         child: Opacity(
@@ -230,7 +210,6 @@ class _OnboardingOverlay extends StatelessWidget {
                                 overlays[index]['title']!,
                                 textAlign: TextAlign.center,
                                 style: AppTextStyles.h1(context).copyWith(
-                                  fontSize: context.scaleFontSize(30),
                                   color: AppColors.foreground,
                                 ),
                               ),
@@ -239,7 +218,6 @@ class _OnboardingOverlay extends StatelessWidget {
                                 overlays[index]['subtitle']!,
                                 textAlign: TextAlign.center,
                                 style: AppTextStyles.body(context).copyWith(
-                                  fontSize: context.scaleFontSize(14),
                                   color: AppColors.primaryAccent,
                                 ),
                               ),
@@ -278,7 +256,7 @@ class _OnboardingOverlay extends StatelessWidget {
                                 : AppColors.primaryAccent.withValues(
                                     alpha: 0.3,
                                   ),
-                            borderRadius: BorderRadius.circular(9999),
+                            borderRadius: AppRadius.circular,
                           ),
                         );
                       }),
@@ -297,7 +275,7 @@ class _OnboardingOverlay extends StatelessWidget {
                         height: context.scaleHeight(56),
                         decoration: BoxDecoration(
                           color: AppColors.primaryAccent,
-                          borderRadius: BorderRadius.circular(50),
+                          borderRadius: AppRadius.button,
                         ),
                         alignment: Alignment.center,
                         child: AnimatedSwitcher(
@@ -309,7 +287,6 @@ class _OnboardingOverlay extends StatelessWidget {
                             ),
                             style: AppTextStyles.buttonLabel(context).copyWith(
                               color: AppColors.background,
-                              fontSize: context.scaleFontSize(16),
                             ),
                           ),
                         ),
@@ -419,8 +396,8 @@ class _OnboardingPageOneState extends State<_OnboardingPageOne>
                   boxShadow: [
                     BoxShadow(
                       color: Colors.black.withValues(alpha: 0.25),
-                      blurRadius: 50,
-                      offset: const Offset(0, 25),
+                      blurRadius: context.scaleWidth(50),
+                      offset: Offset(0, context.scaleHeight(25)),
                     ),
                   ],
                 ),
@@ -445,7 +422,7 @@ class _OnboardingPageOneState extends State<_OnboardingPageOne>
             child: SlideTransition(
               position: _pillLeftSlide,
               child: ClipRRect(
-                borderRadius: BorderRadius.circular(50),
+                borderRadius: AppRadius.button,
                 child: BackdropFilter(
                   filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
                   child: Container(
@@ -455,7 +432,7 @@ class _OnboardingPageOneState extends State<_OnboardingPageOne>
                     ),
                     decoration: BoxDecoration(
                       color: AppColors.silverGlass,
-                      borderRadius: BorderRadius.circular(50),
+                      borderRadius: AppRadius.button,
                       border: Border.all(color: AppColors.silverBorder),
                     ),
                     child: Row(
@@ -487,7 +464,7 @@ class _OnboardingPageOneState extends State<_OnboardingPageOne>
             child: SlideTransition(
               position: _pillRightSlide,
               child: ClipRRect(
-                borderRadius: BorderRadius.circular(50),
+                borderRadius: AppRadius.button,
                 child: BackdropFilter(
                   filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
                   child: Container(
@@ -497,7 +474,7 @@ class _OnboardingPageOneState extends State<_OnboardingPageOne>
                     ),
                     decoration: BoxDecoration(
                       color: AppColors.silverGlass,
-                      borderRadius: BorderRadius.circular(50),
+                      borderRadius: AppRadius.button,
                       border: Border.all(color: AppColors.silverBorder),
                     ),
                     child: Row(
@@ -627,7 +604,7 @@ class _OnboardingPageTwoState extends State<_OnboardingPageTwo>
                         alignment: Alignment.center,
                         decoration: BoxDecoration(
                           color: AppColors.silverFaint,
-                          borderRadius: BorderRadius.circular(50),
+                          borderRadius: AppRadius.button,
                           border: Border.all(color: AppColors.silverBorder),
                         ),
                         child: Text(
@@ -686,7 +663,7 @@ class _TopicPill extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ClipRRect(
-      borderRadius: BorderRadius.circular(50),
+      borderRadius: AppRadius.button,
       child: BackdropFilter(
         filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
         child: Container(
@@ -695,7 +672,7 @@ class _TopicPill extends StatelessWidget {
           padding: EdgeInsets.symmetric(horizontal: context.scaleWidth(25)),
           decoration: BoxDecoration(
             color: AppColors.silverGlass,
-            borderRadius: BorderRadius.circular(50),
+            borderRadius: AppRadius.button,
             border: Border.all(color: AppColors.silverBorder),
           ),
           child: Row(
@@ -735,7 +712,7 @@ class _TopicPill extends StatelessWidget {
                       width: double.infinity,
                       decoration: BoxDecoration(
                         color: AppColors.silverFaint,
-                        borderRadius: BorderRadius.circular(9999),
+                        borderRadius: AppRadius.circular,
                       ),
                     ),
                     SizedBox(height: context.scaleHeight(4)),
@@ -744,7 +721,7 @@ class _TopicPill extends StatelessWidget {
                       width: context.scaleWidth(130),
                       decoration: BoxDecoration(
                         color: AppColors.silverGlass,
-                        borderRadius: BorderRadius.circular(9999),
+                        borderRadius: AppRadius.circular,
                       ),
                     ),
                   ],
@@ -924,7 +901,7 @@ class _OnboardingPageThreeState extends State<_OnboardingPageThree>
                               ),
                               // Circle border
                               ClipRRect(
-                                borderRadius: BorderRadius.circular(9999),
+                                borderRadius: AppRadius.circular,
                                 child: BackdropFilter(
                                   filter: ImageFilter.blur(
                                     sigmaX: 10,
@@ -979,7 +956,7 @@ class _StatusPill extends StatelessWidget {
       alignment: Alignment.center,
       decoration: BoxDecoration(
         color: AppColors.silverGlass,
-        borderRadius: BorderRadius.circular(50),
+        borderRadius: AppRadius.button,
         border: Border.all(color: AppColors.silverFaint), // 0.1 alpha
       ),
       child: Text(

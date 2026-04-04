@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../core/colors/app_colors.dart';
 import '../../../core/navigation/app_router.dart';
+import '../../../core/radius/app_radius.dart';
 import '../../../core/theme/glass_surface.dart';
 import '../../../core/typography/app_text_styles.dart';
 import '../../../core/utils/app_animations.dart';
@@ -235,7 +236,6 @@ class _SplashViewState extends State<_SplashView>
                       child: Text(
                         'Rasseny',
                         style: AppTextStyles.appName(context).copyWith(
-                          fontSize: context.scaleFontSize(30),
                           color: AppColors.foreground,
                         ),
                       ),
@@ -254,9 +254,7 @@ class _SplashViewState extends State<_SplashView>
                       child: Text(
                         'INTELLIGENCE',
                         style: AppTextStyles.categoryPill(context).copyWith(
-                          fontSize: context.scaleFontSize(12),
                           color: AppColors.silverPlaceholder,
-                          letterSpacing: 1.2,
                         ),
                       ),
                     ),
@@ -271,9 +269,9 @@ class _SplashViewState extends State<_SplashView>
                   animation: _loadingCtrl,
                   builder: (_, __) => Container(
                     width: context.scaleWidth(107.6) * _loadingWidth.value,
-                    height: 2,
+                    height: context.scaleHeight(2),
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(9999),
+                      borderRadius: AppRadius.circular,
                       color: AppColors.silverBorder,
                     ),
                   ),
