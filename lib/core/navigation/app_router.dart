@@ -1,6 +1,15 @@
 import 'package:go_router/go_router.dart';
 
 import '../../presentation/shell/app_shell.dart';
+import '../../presentation/views/article/article_detail_screen.dart';
+import '../../presentation/views/history/reading_history_screen.dart';
+import '../../presentation/views/vault/vault_screen.dart';
+import '../../presentation/views/channels/channels_screen.dart';
+import '../../presentation/views/language/language_screen.dart';
+import '../../presentation/views/settings/app_settings_screen.dart';
+import '../../presentation/views/notifications/notifications_screen.dart';
+import '../../presentation/views/subscription/subscription_screen.dart';
+import '../../presentation/views/about/about_screen.dart';
 import '../../presentation/views/auth/auth_success_screen.dart';
 import '../../presentation/views/auth/forgot_password_screen.dart';
 import '../../presentation/views/auth/interests_screen.dart';
@@ -41,6 +50,7 @@ class AppRouter {
   static const String subscription = '/subscription';
   static const String readingHistory = '/reading-history';
   static const String savedArticles = '/saved-articles';
+  static const String myChannels = '/my-channels';
   static const String about = '/about';
 
   static final GoRouter router = GoRouter(
@@ -92,8 +102,10 @@ class AppRouter {
       // ── Feature pages ────────────────────────────────────────
       GoRoute(
         path: articleDetail,
-        builder: (_, state) =>
-            StubScreen(title: 'Article ${state.pathParameters['id']}'),
+        builder: (_, state) {
+          final id = state.pathParameters['id'] ?? '1';
+          return ArticleDetailScreen(id: id);
+        },
       ),
       GoRoute(
         path: summarize,
@@ -107,7 +119,7 @@ class AppRouter {
       ),
       GoRoute(
         path: notifications,
-        builder: (_, __) => const StubScreen(title: 'Notifications'),
+        builder: (_, __) => const NotificationsScreen(),
       ),
 
       // ── Profile / Settings ───────────────────────────────────
@@ -121,27 +133,31 @@ class AppRouter {
       ),
       GoRoute(
         path: language,
-        builder: (_, __) => const StubScreen(title: 'Language'),
+        builder: (_, __) => const LanguageScreen(),
       ),
       GoRoute(
         path: appSettings,
-        builder: (_, __) => const StubScreen(title: 'App Settings'),
+        builder: (_, __) => const AppSettingsScreen(),
       ),
       GoRoute(
         path: subscription,
-        builder: (_, __) => const StubScreen(title: 'Subscription'),
+        builder: (_, __) => const SubscriptionScreen(),
       ),
       GoRoute(
         path: readingHistory,
-        builder: (_, __) => const StubScreen(title: 'Reading History'),
+        builder: (_, __) => const ReadingHistoryScreen(),
       ),
       GoRoute(
         path: savedArticles,
-        builder: (_, __) => const StubScreen(title: 'Saved Articles'),
+        builder: (_, __) => const VaultScreen(),
+      ),
+      GoRoute(
+        path: myChannels,
+        builder: (_, __) => const ChannelsScreen(),
       ),
       GoRoute(
         path: about,
-        builder: (_, __) => const StubScreen(title: 'About'),
+        builder: (_, __) => const AboutScreen(),
       ),
     ],
   );

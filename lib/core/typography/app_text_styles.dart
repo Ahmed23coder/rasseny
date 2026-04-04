@@ -42,6 +42,15 @@ class AppTextStyles {
     color: AppColors.foreground,
   );
 
+  /// H3 Subsection Title — Newsreader 600, 18, line-height 1.3
+  static TextStyle h3(BuildContext context) => TextStyle(
+    fontFamily: _headline,
+    fontWeight: FontWeight.w600,
+    fontSize: context.scaleFontSize(18),
+    height: 1.3,
+    color: AppColors.foreground,
+  );
+
   /// H4 Card Headline — Newsreader 600, 14–15
   static TextStyle h4CardHeadline(BuildContext context) => TextStyle(
     fontFamily: _headline,

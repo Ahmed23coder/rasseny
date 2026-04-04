@@ -21,6 +21,7 @@ class AppColors {
 
   static const Color accentBlue = Color(0xFF2979FF);
   static const Color destructive = Color(0xFFD4183D);
+  static const Color success = Color(0xFF2E7D32);
   static const Color ring = Color(0xFFC0C0C0);
 
   // ── Computed Border ──────────────────────────────────────────

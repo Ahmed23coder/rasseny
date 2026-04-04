@@ -5,10 +5,13 @@ import 'package:lucide_icons_flutter/lucide_icons.dart';
 import '../../../domain/repositories/news_repository.dart';
 
 import '../../../core/colors/app_colors.dart';
+import '../../../core/radius/app_radius.dart';
 import '../../../core/spacing/app_spacing.dart';
 import '../../../core/typography/app_text_styles.dart';
 import '../../../core/utils/app_animations.dart';
 import '../../../core/utils/responsive_util.dart';
+import '../../../data/models/article_mock_data.dart';
+import '../../../data/models/article_model.dart';
 import '../../viewmodels/home/home_cubit.dart';
 import '../../widgets/cards/article_card.dart';
 import '../../widgets/inputs/app_search_bar.dart';
@@ -49,12 +52,23 @@ class _HomeBody extends StatelessWidget {
                     SizedBox(height: context.scaleHeight(16)),
                     Row(
                       children: [
+                        IconButton(
+                          padding: EdgeInsets.zero,
+                          constraints: const BoxConstraints(),
+                          icon: Icon(
+                            LucideIcons.menu,
+                            color: AppColors.silverSecondaryLabel,
+                            size: context.scaleWidth(24),
+                          ),
+                          onPressed: () => Scaffold.of(context).openDrawer(),
+                        ),
+                        SizedBox(width: context.scaleWidth(12)),
                         Text('Rasseny', style: AppTextStyles.appName(context)),
                         const Spacer(),
                         Icon(
                           LucideIcons.bell,
                           color: AppColors.silverSecondaryLabel,
-                          size: 24,
+                          size: context.scaleWidth(24),
                         ),
                       ],
                     ),
@@ -122,6 +136,18 @@ class _HomeBody extends StatelessWidget {
               ),
             ),
           ),
+          // ── Featured Article ──────────────────────────────────
+          SliverToBoxAdapter(
+            child: PageEntranceAnimation(
+              delay: const Duration(milliseconds: 250),
+              child: Padding(
+                padding: padding.copyWith(top: context.scaleHeight(8)),
+                child: _FeaturedArticle(
+                  article: ArticleMockData.articles[0],
+                ),
+              ),
+            ),
+          ),
 
           // ── Section title ─────────────────────────────────────
           SliverToBoxAdapter(
@@ -184,6 +210,82 @@ class _HomeBody extends StatelessWidget {
                 ),
               );
             },
+          ),
+        ],
+      ),
+    );
+  }
+}
+class _FeaturedArticle extends StatelessWidget {
+  final ArticleModel article;
+
+  const _FeaturedArticle({required this.article});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: context.scaleHeight(240),
+      width: double.infinity,
+      decoration: BoxDecoration(
+        color: AppColors.card,
+        borderRadius: AppRadius.card,
+        image: article.thumbnailUrl != null
+            ? DecorationImage(
+                image: NetworkImage(article.thumbnailUrl!),
+                fit: BoxFit.cover,
+              )
+            : null,
+      ),
+      child: Stack(
+        children: [
+          if (article.thumbnailUrl == null)
+            Center(
+              child: Icon(
+                LucideIcons.image,
+                color: AppColors.muted,
+                size: context.scaleWidth(48),
+              ),
+            ),
+          Positioned(
+            bottom: 0,
+            left: 0,
+            right: 0,
+            child: Container(
+              padding: EdgeInsets.all(context.scaleWidth(20)),
+              decoration: BoxDecoration(
+                borderRadius: AppRadius.card,
+                gradient: LinearGradient(
+                  begin: Alignment.bottomCenter,
+                  end: Alignment.topCenter,
+                  colors: [
+                    Colors.black.withValues(alpha: 0.8),
+                    Colors.transparent,
+                  ],
+                ),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    article.category.toUpperCase(),
+                    style: AppTextStyles.categoryPill(context).copyWith(
+                      color: AppColors.primaryAccent,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  SizedBox(height: context.scaleHeight(8)),
+                  Text(
+                    article.title,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    style: AppTextStyles.h2(context).copyWith(
+                      color: Colors.white,
+                    ),
+                  ),
+                ],
+              ),
+            ),
           ),
         ],
       ),

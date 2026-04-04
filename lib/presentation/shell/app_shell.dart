@@ -4,6 +4,7 @@ import '../../core/colors/app_colors.dart';
 import '../views/home/home_view.dart';
 import '../views/stub_screen.dart';
 import '../widgets/navigation/bottom_nav_bar.dart';
+import '../widgets/navigation/home_menu_drawer.dart';
 
 /// Shell widget that wraps the bottom navigation bar around tab content.
 class AppShell extends StatefulWidget {
@@ -14,6 +15,7 @@ class AppShell extends StatefulWidget {
 }
 
 class _AppShellState extends State<AppShell> {
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   int _currentIndex = 0;
 
   static const _screens = <Widget>[
@@ -28,7 +30,9 @@ class _AppShellState extends State<AppShell> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       backgroundColor: AppColors.background,
+      drawer: const HomeMenuDrawer(),
       body: IndexedStack(index: _currentIndex, children: _screens),
       bottomNavigationBar: AppBottomNavBar(
         currentIndex: _currentIndex,
